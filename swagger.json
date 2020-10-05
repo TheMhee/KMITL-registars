@@ -1,0 +1,371 @@
+openapi: 3.0.1
+info:
+  title: KMITL Registars
+  description: ''
+  termsOfService: 'http://swagger.io/terms/'
+  version: 1.0.0
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
+servers:
+  - url: /
+tags:
+  - name: Lecturer
+    description: lecturer Service
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: Evaluation
+    description: Evaluation Service
+    externalDocs:
+      description: Find out more
+      url: 'http://swagger.io'
+  - name: form and knowledge
+    description: form and knowledge service
+    externalDocs:
+      description: Find out more
+      url: 'swagger.io'
+      
+paths:
+  /lecturer:
+    post:
+      tags:
+        - Lecturer
+      summary: Add lecturer
+      operationId: addLecturer
+      requestBody:
+        description: object needs to create lecturer
+        content:
+          JSON:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  format: int32
+                lecturerId:
+                  type: integer
+                  format: int32
+                lecturerName:
+                  type: string
+                lecturerLastName':
+                  type: string
+                position:
+                  type: string
+                workYear:
+                  type: integer
+                  format: int32
+                faculty:
+                  type: string
+                salary:
+                  type: integer
+                  format: int32
+        required: true
+      responses:
+        '200':
+          description: success
+          content: {}
+
+  '/lecturer/{lecturerId}':
+    get:
+      tags:
+        - Lecturer
+      summary: get lecturer by id
+      operationId: getLecturerById
+      parameters:
+        - name: lecturerId
+          in: path
+          description: ID of lecturer to return
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content:
+            JSON:
+              schema:
+                $ref: '#/components/schemas/Lecturer'
+    put:
+      tags:
+        - Lecturer
+      summary: edit lecturer by id
+      operationId: editLecturerById
+      parameters:
+        - name: lecturerId
+          in: path
+          description: ID of lecturer to return
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        description: info that u want to edit
+        content:
+          JSON:
+            schema:
+              $ref: '#/components/schemas/LecturerEdit'
+      responses:
+        '200':
+          description: success
+          content:
+            JSON:
+              schema:
+                $ref: '#/components/schemas/Lecturer'
+    delete:
+      tags:
+        - Lecturer
+      summary: delete lecturer by id
+      parameters:
+        - name: lecturerId
+          in: path
+          description: ID of lecturer to return
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: success
+          content: {}
+  /lecturer/findName:
+    get:
+      tags:
+        - Lecturer
+      summary: get lecturer by name
+      operationId: getLecturerByName
+      parameters:
+        - name: lecturerName
+          in: query
+          description: name of lecturer to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: success
+          content:
+            JSON:
+              schema:
+                $ref: '#/components/schemas/Lecturer'
+  '/evaluation/course/{courseId}':
+    post:
+      tags:
+        - Evaluation
+      summary: Evaluate course and tracher
+      operationId: evaluateCourse
+      parameters:
+        - name: courseId
+          in: path
+          description: info
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: evaluate Info
+        content:
+          JSON:
+            schema:
+              $ref: '#/components/schemas/evaluateInfo'
+      responses:
+        '200':
+          description: success
+  '/evaluation/student/{studentId}':
+    post:
+      tags:
+        - Evaluation
+      summary: Evaluate student
+      operationId: evaluateStudent
+      parameters:
+        - name: studentId
+          in: path
+          description: info
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: evaluate Info
+        content:
+          JSON:
+            schema:
+              $ref: '#/components/schemas/evaluateInfo'
+      responses:
+        '200':
+          description: success
+  
+  /form:
+    post:
+      tags: 
+        - form and knowledge
+      summary: add form
+      operationId: addForm
+      requestBody:
+        description: form info
+        content:
+          JSON:
+            schema:
+              $ref: '#/components/schemas/formInfo'
+      responses:
+        '200':
+          description: success
+    get:
+      tags: 
+        - form and knowledge
+      summary: get all form
+      operationId: getAllForm
+      responses:
+        "200":
+          description: success
+          content:
+            JSON:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/formInfo'
+                  
+                    
+  /form/{formId}:
+    get:
+      tags: 
+        - form and knowledge
+      summary: get form by id
+      operationId: getFormById
+      parameters:
+        - name: formId
+          in: path
+          description: form id to get form
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: success
+          content:
+            JSON:
+             schema:
+               $ref: '#/components/schemas/formInfo'
+    patch:
+      tags: 
+        - form and knowledge
+      summary: edit form by id
+      operationId: editFormById
+      parameters:
+        - name: formId
+          in: path
+          description: form id to get form
+          required: true
+          schema:
+            type: integer
+            format: int32
+      requestBody:
+        description: form info to edit
+        content:
+          JSON:
+            schema:
+              type: object
+              properties:
+                formCategogy:
+                  type: integer
+                  format: int32
+                description:
+                  type: string
+                contentUrl:
+                  type: string
+      responses:
+        "200":
+          description: success
+
+    delete:
+      tags: 
+        - form and knowledge
+      summary: delete form by id
+      operationId: deleteFormById
+      parameters:
+        - name: formId
+          in: path
+          description: form id to get form
+          required: true
+          schema:
+            type: integer
+            format: int32
+      responses:
+        "200":
+          description: success
+            
+      
+    
+    
+components:
+  schemas:
+    Lecturer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        lecturerId:
+          type: integer
+          format: int32
+        lecturerName:
+          type: string
+        lecturerLastName':
+          type: string
+        position:
+          type: string
+        workYear:
+          type: integer
+          format: int32
+        faculty:
+          type: string
+        salary:
+          type: integer
+          format: int32
+    LecturerEdit:
+      type: object
+      properties:
+        lecturerName:
+          type: string
+        lecturerLastName':
+          type: string
+        position:
+          type: string
+          
+    evaluateInfo:
+      type: object
+      properties:
+        studentId:
+          type: integer
+          format: int32
+        evaluationInfo:
+          type: array
+          items:
+            type: object
+            properties:
+              questionId:
+                type: integer
+                format: int32
+              questionName:
+                type: string
+              answerPoint:
+                type: integer
+                format: int32
+                
+        comment:
+          type: string
+    formInfo:
+      type: object
+      properties:
+        formId:
+          type: integer
+          format: int32
+        userId:
+          type: integer
+          format: int32
+        formCategogy:
+          type: integer
+          format: int32
+        description:
+          type: string
+        contentUrl:
+          type: string
