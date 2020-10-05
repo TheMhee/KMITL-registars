@@ -292,8 +292,23 @@ paths:
       responses:
         "200":
           description: success
-          
-  '/tranferHistory/{studentId}':
+  /finance/pay:
+    post:
+      tags:
+        - Finance
+      summary: Payment
+      operationId: financePay
+      requestBody:
+        description: finance Info
+        content:
+          JSON:
+            schema:
+              $ref: '#/components/schemas/receptInfo'
+      responses:
+        '200':
+          description: success
+  
+  '/finance/history/{studentId}':
     get:
       tags:
         - Finance
@@ -618,10 +633,16 @@ components:
           format: int32
         status:
           type: string
+          enum: 
+            - paid
+            - unpaid
         date:
           type: string
         time:
           type: string
+        cost:
+          type: integer
+          format: int32
           
     tranferHistoryInfo:
       type: array
