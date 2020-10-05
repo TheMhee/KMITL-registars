@@ -292,7 +292,28 @@ paths:
       responses:
         "200":
           description: success
-            
+          
+  '/tranferHistory/{studentId}':
+    get:
+      tags:
+        - Finance
+      summary: Tranfer history
+      operationId: tranferId
+      parameters:
+        - name: studentId
+          in: path
+          description: info
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: success
+          content:
+            JSON:
+             schema:
+               $ref: '#/components/schemas/tranferHistoryInfo'            
       
     
     
@@ -369,3 +390,41 @@ components:
           type: string
         contentUrl:
           type: string
+
+    receptInfo:
+      type: object
+      properties:
+        receiptNumber:
+          type: integer
+          format: int32
+        status:
+          type: string
+        date:
+          type: string
+        time:
+          type: string
+          
+    tranferHistoryInfo:
+      type: array
+      items:
+        type: object
+        properties:
+          semester:
+            type: integer
+            format: int32
+          academicYear:
+            type: integer
+            format: int32
+          description:
+            type: string
+          amount:
+            type: integer
+            format: int32
+          overdue:
+            type: integer
+            format: int32
+          loan:
+            type: integer
+            format: int32
+          receptInfo:
+            $ref: '#/components/schemas/receptInfo'
